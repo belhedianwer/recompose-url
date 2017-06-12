@@ -1,0 +1,19 @@
+{
+   "author":{
+      "name":"Anwer Awled Belhedi",
+      "email":"belhedi.anwer@gmail.com"
+   },
+   "name":"recompose-url",
+   "description":"Parse the url and return urls with or without protocol and with or without www.",
+   "version":"1.0.2",
+   "dependencies":{
+      "request":"^2.74.0"
+   },
+   "devDependencies":{
+
+   },
+   "repository":{
+      "type":"git",
+      "url":"git://github.com/belhedianwer/recompose-url.git"
+   }
+}
