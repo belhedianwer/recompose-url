@@ -10,21 +10,23 @@ module.exports = {
    *
    * @param {string} _url
    * @param {boolean} callRequest (optional) | Force verification of the protocol by calling the url
-   * @return {Array} 
+   * @return {Object} 
    * 
    *  IN e.g., function ('domain.com', false) | function ('www.domain.com', true) | function ('http://domain.com, false')
    *  
    *  OUT e.g.,
-   *  [ { originUrl: 'http://domain.com' },
-   *  { withHttpWww: 'http://www.domain.com' },
-   *  { withHttpsWww: 'https://www.domain.com' },
-   *  { withHttp: 'http://domain.com' },
-   *  { withHttps: 'https://domain.com' } ]
+   *  { 
+   *    { originUrl: 'http://domain.com' },
+   *    { withHttpWww: 'http://www.domain.com' },
+   *    { withHttpsWww: 'https://www.domain.com' },
+   *    { withHttp: 'http://domain.com' },
+   *    { withHttps: 'https://domain.com' } 
+   *  }
    * 
    */
   setUrls: function (_url, callRequest = false, callback) {
     var self = this,
-        urls = [];
+        urls = {};
 
     self.setProtocol(_url, callRequest, function (err, result) {
       _url = result;
@@ -32,19 +34,19 @@ module.exports = {
       var parts = url.parse(_url);
 
       if (parts.host && parts.href) {
-        urls.push({originUrl: parts.protocol + '//' + parts.host});
+        urls = _.extend(urls, {originUrl: parts.protocol + '//' + parts.host});
 
         if (!self.hasWww(_url)) {
-          urls.push({withHttpWww: self.httpProtocol + 'www.' + parts.host});
-          urls.push({withHttpsWww: self.httpsProtocol + 'www.' + parts.host});
-          urls.push({withHttp: self.httpProtocol + parts.host});
-          urls.push({withHttps: self.httpsProtocol + parts.host});
+          urls = _.extend(urls, {withHttpWww: self.httpProtocol + 'www.' + parts.host});
+          urls = _.extend(urls, {withHttpsWww: self.httpsProtocol + 'www.' + parts.host});
+          urls = _.extend(urls, {withHttp: self.httpProtocol + parts.host});
+          urls = _.extend(urls, {withHttps: self.httpsProtocol + parts.host});
         }
         else {
-          urls.push({withHttpWww: self.httpProtocol + parts.host});
-          urls.push({withHttpsWww: self.httpsProtocol + parts.host});
-          urls.push({withHttp: self.httpProtocol + parts.host.replace(/^www\./, '')});
-          urls.push({withHttps: self.httpsProtocol + parts.host.replace(/^www\./, '')});
+          urls = _.extend(urls, {withHttpWww: self.httpProtocol + parts.host});
+          urls = _.extend(urls, {withHttpsWww: self.httpsProtocol + parts.host});
+          urls = _.extend(urls, {withHttp: self.httpProtocol + parts.host.replace(/^www\./, '')});
+          urls = _.extend(urls, {withHttps: self.httpsProtocol + parts.host.replace(/^www\./, '')});
         }
       }
       callback(null, urls);

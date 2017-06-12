@@ -18,9 +18,11 @@ How to use:
 Result e.g.,
 ------------
 
-[ { originUrl: 'http://domain.com' },
-{ withHttpWww: 'http://www.domain.com' },
-{ withHttpsWww: 'https://www.domain.com' },
-{ withHttp: 'http://domain.com' },
-{ withHttps: 'https://domain.com' } ]
+{ 
+  { originUrl: 'http://domain.com' },
+  { withHttpWww: 'http://www.domain.com' },
+  { withHttpsWww: 'https://www.domain.com' },
+  { withHttp: 'http://domain.com' },
+  { withHttps: 'https://domain.com' } 
+}
 
