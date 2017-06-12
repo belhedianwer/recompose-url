@@ -15,5 +15,17 @@
    "repository":{
       "type":"git",
       "url":"git://github.com/belhedianwer/recompose-url.git"
+   },
+   "main":"index.js",
+   "scripts":{
+      "test":"echo \"Error: no test specified\" && exit 1"
+   },
+   "keywords":[
+      "url",
+      "parse",
+      "recompose"
+   ],
+   "bugs":{
+      "url":"https://github.com/belhedianwer/recompose-url/issues"
    }
 }
