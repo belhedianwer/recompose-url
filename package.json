@@ -5,7 +5,7 @@
    },
    "name":"recompose-url",
    "description":"Parse the url and return urls with or without protocol and with or without www.",
-   "version":"1.0.5",
+   "version":"1.0.6",
    "dependencies":{
       "request":"^2.74.0"
    },
