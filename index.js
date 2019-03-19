@@ -4,7 +4,6 @@ var request = require('request');
 module.exports = {
   httpProtocol: 'http://',
   httpsProtocol: 'https://',
-
   /**
    * Parse the url and return urls with or without protocol and with or without www.
    *
@@ -41,8 +40,7 @@ module.exports = {
           urls = _.extend(urls, {withHttpsWww: self.httpsProtocol + 'www.' + parts.host});
           urls = _.extend(urls, {withHttp: self.httpProtocol + parts.host});
           urls = _.extend(urls, {withHttps: self.httpsProtocol + parts.host});
-        }
-        else {
+        } else {
           urls = _.extend(urls, {withHttpWww: self.httpProtocol + parts.host});
           urls = _.extend(urls, {withHttpsWww: self.httpsProtocol + parts.host});
           urls = _.extend(urls, {withHttp: self.httpProtocol + parts.host.replace(/^www\./, '')});
@@ -52,7 +50,6 @@ module.exports = {
       callback(null, urls);
     });
   },
-
   /**
    * Define the url protocol if it does not exist
    *
@@ -67,7 +64,8 @@ module.exports = {
    */
   setProtocol: function (_url, callRequest = false, callback) {
     var self = this,
-        _url = _url.trim();
+        _url = (_url === undefined ? '' : _url.trim());
+
     // Check if https or http
     if (!self.hasProtocol(_url)) {
 
@@ -80,14 +78,11 @@ module.exports = {
             _url = self.httpProtocol + _url;
           callback(null, _url);
         });
-      }
-      else
+      } else
         callback(null, self.httpProtocol + _url);
-    }
-    else
+    } else
       callback(null, _url);
   },
-
   /**
    * Check if https or http exists
    *
@@ -100,13 +95,12 @@ module.exports = {
    */
   hasProtocol: function (_url) {
     var self = this,
-        _url = _url.trim();
+        _url = (_url === undefined ? '' : _url.trim());
 
     if (_url.indexOf(self.httpProtocol) == -1 && _url.indexOf(self.httpsProtocol) == -1)
       return false;
     return true;
   },
-
   /**
    * Check if www exists
    *
@@ -118,7 +112,7 @@ module.exports = {
    *  OUT e.g.,  true | false
    */
   hasWww: function (_url) {
-    _url = _url.trim();
+    _url = (_url === undefined ? '' : _url.trim());
 
     if (_url.indexOf("www") == -1)
       return false;
