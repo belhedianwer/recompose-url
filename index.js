@@ -138,6 +138,19 @@ module.exports = {
     return true;
   },
   /**
+   * Remove querystring from URL
+   *
+   * @param {string} _url
+   * @return {string} 
+   * 
+   *  IN e.g., function ('http://domain.com/?param=val')
+   *  
+   *  OUT e.g.,  'http://domain.com/'
+   */
+  removeQueryString: function (_url) {
+    return _url.split(/[?#]/)[0];
+  },
+  /**
    * Check if url is valid
    *
    * @param {string} _url

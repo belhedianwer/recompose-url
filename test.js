@@ -22,3 +22,6 @@ recomposeUrl.setUrls('http://www.domain.com', true, function (err, result) {
 recomposeUrl.setProtocol('www.domain.com', true, function (err, result) {
   console.log('setProtocol Result:', result);
 });
+
+// removeQueryString function
+var url = recomposeUrl.removeQueryString('http://domain.com/?param=val');
