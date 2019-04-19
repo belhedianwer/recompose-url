@@ -10,7 +10,7 @@ How to use:
           console.log('Urls:', result);
         });
 
-        recomposeUrl.setUrls('http://www.domain.com', true, function (err, result) { 
+        recomposeUrl.setUrls('http://www.domain.com/path?param=1', true, function (err, result) { 
           console.log('Urls:', result);
         });
 
@@ -19,10 +19,14 @@ Result e.g.,
 ------------
 
 { 
-  { originUrl: 'http://domain.com' },
-  { withHttpWww: 'http://www.domain.com' },
-  { withHttpsWww: 'https://www.domain.com' },
-  { withHttp: 'http://domain.com' },
-  { withHttps: 'https://domain.com' } 
+  { originUrl: 'http://www.domain.com/path?param=1' },
+  { withHttpWwwHost: 'http://www.domain.com' },
+  { withHttpsWwwHost: 'https://www.domain.com' },
+  { withHttpHost: 'http://domain.com' },
+  { withHttpsHost: 'https://domain.com' } 
+  { withHttpWww: 'http://www.domain.com/path?param=1' },
+  { withHttpsWww: 'https://www.domain.com/path?param=1' },
+  { withHttp: 'http://domain.com/path?param=1' },
+  { withHttps: 'https://domain.com/path?param=1' } 
 }
 

@@ -14,7 +14,7 @@ recomposeUrl.setUrls('domain.com', true, function (err, result) {
 });
 
 // setUrls function
-recomposeUrl.setUrls('http://www.domain.com', true, function (err, result) {
+recomposeUrl.setUrls('http://www.domain.com/path?param=1', true, function (err, result) {
   console.log('setUrls Result:', result);
 });
 

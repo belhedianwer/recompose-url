@@ -11,7 +11,7 @@ module.exports = {
    * @param {boolean} callRequest (optional) | Force verification of the protocol by calling the url
    * @return {Object} 
    * 
-   *  IN e.g., function ('domain.com', false) | function ('www.domain.com', true) | function ('http://domain.com, false')
+   *  IN e.g., function('domain.com', false) | function('www.domain.com', true) | function('http://domain.com, false')
    *  
    *  OUT e.g.,
    *  { 
@@ -36,20 +36,25 @@ module.exports = {
       _url = result;
 
       var parts = url.parse(_url);
+      urls = _.extend(urls, {originUrl: parts.href});
 
-      urls = _.extend(urls, {originUrl: parts.protocol + '//' + parts.host});
+      var host = parts.host.replace(/^www\./, ''); // without www
+      var endUrl = host;
 
-      if (!self.hasWww(_url)) {
-        urls = _.extend(urls, {withHttpWww: self.httpProtocol + 'www.' + parts.host});
-        urls = _.extend(urls, {withHttpsWww: self.httpsProtocol + 'www.' + parts.host});
-        urls = _.extend(urls, {withHttp: self.httpProtocol + parts.host});
-        urls = _.extend(urls, {withHttps: self.httpsProtocol + parts.host});
-      } else {
-        urls = _.extend(urls, {withHttpWww: self.httpProtocol + parts.host});
-        urls = _.extend(urls, {withHttpsWww: self.httpsProtocol + parts.host});
-        urls = _.extend(urls, {withHttp: self.httpProtocol + parts.host.replace(/^www\./, '')});
-        urls = _.extend(urls, {withHttps: self.httpsProtocol + parts.host.replace(/^www\./, '')});
-      }
+      if (parts.path !== null)
+        endUrl = host + parts.path;
+
+      if (parts.hash !== null)
+        endUrl += parts.hash;
+
+      urls = _.extend(urls, {withHttpWww: self.httpProtocol + 'www.' + endUrl});
+      urls = _.extend(urls, {withHttpsWww: self.httpsProtocol + 'www.' + endUrl});
+      urls = _.extend(urls, {withHttp: self.httpProtocol + endUrl});
+      urls = _.extend(urls, {withHttps: self.httpsProtocol + endUrl});
+      urls = _.extend(urls, {withHttpWwwHost: self.httpProtocol + 'www.' + host});
+      urls = _.extend(urls, {withHttpsWwwHost: self.httpsProtocol + 'www.' + host});
+      urls = _.extend(urls, {withHttpHost: self.httpProtocol + host});
+      urls = _.extend(urls, {withHttpsHost: self.httpsProtocol + host});
 
       callback(null, urls);
     });
@@ -61,7 +66,7 @@ module.exports = {
    * @param {boolean} callRequest (optional) | Force verification of the protocol by calling the url
    * @return {string} 
    * 
-   *  IN e.g., function ('domain.com', false) | function ('www.domain.com', true) | function ('http://domain.com, false')
+   *  IN e.g., function('domain.com', false) | function('www.domain.com', true) | function('http://domain.com, false')
    *  
    *  OUT e.g.,  http://domain.com | https://domain.com | http://www.domain.com | https://www.domain.com
    * 
@@ -99,7 +104,7 @@ module.exports = {
    * @param {string} _url
    * @return {boolean} 
    * 
-   *  IN e.g., function ('www.domain.com', true) | function ('http://domain.com')
+   *  IN e.g., function('www.domain.com') | function('http://domain.com')
    *  
    *  OUT e.g.,  false | true
    */
@@ -121,7 +126,7 @@ module.exports = {
    * @param {string} _url
    * @return {boolean} 
    * 
-   *  IN e.g., function ('www.domain.com', true) | function ('http://domain.com')
+   *  IN e.g., function('www.domain.com') | function('http://domain.com')
    *  
    *  OUT e.g.,  true | false
    */
@@ -143,7 +148,7 @@ module.exports = {
    * @param {string} _url
    * @return {string} 
    * 
-   *  IN e.g., function ('http://domain.com/?param=val')
+   *  IN e.g., function('http://domain.com/?param=val')
    *  
    *  OUT e.g.,  'http://domain.com/'
    */
@@ -156,7 +161,7 @@ module.exports = {
    * @param {string} _url
    * @return {boolean} 
    * 
-   *  IN e.g., function ('www.domain.com', true) | function ('www.domain.', false)
+   *  IN e.g., function('www.domain.com') | function('www.domain.')
    *  
    *  OUT e.g.,  true | false
    */
